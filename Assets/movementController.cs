@@ -1,9 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class movementController : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-
+    public int score;
     Rigidbody m_Rigidbody;
     public float m_Thrust = 20f;
 
@@ -24,26 +25,26 @@ public class movementController : MonoBehaviour
         if (Input.GetKey(KeyCode.UpArrow))
         {
 
-            print("siema cos sie dzieje");
             m_Rigidbody.AddForce(Vector3.forward * m_Thrust);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-
-            print("siema cos sie dzieje");
             m_Rigidbody.AddForce(-Vector3.forward * m_Thrust);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
 
-            print("siema cos sie dzieje");
             m_Rigidbody.AddForce(Vector3.left * m_Thrust);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-
-            print("siema cos sie dzieje");
             m_Rigidbody.AddForce(Vector3.right * m_Thrust);
         }
+    }
+
+
+    public void printScore()
+    {
+        print("current score" + score);
     }
 }
