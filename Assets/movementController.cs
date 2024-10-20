@@ -8,6 +8,8 @@ public class movementController : MonoBehaviour
     Rigidbody m_Rigidbody;
     public float m_Thrust = 20f;
 
+    public Vector3 direction;
+
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
@@ -17,31 +19,37 @@ public class movementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            direction = Vector3.forward;
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            direction = - Vector3.forward;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            direction = Vector3.left;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            direction = Vector3.right;
+        }
     }
 
     void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-
-            m_Rigidbody.AddForce(Vector3.forward * m_Thrust);
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            m_Rigidbody.AddForce(-Vector3.forward * m_Thrust);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-
-            m_Rigidbody.AddForce(Vector3.left * m_Thrust);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            m_Rigidbody.AddForce(Vector3.right * m_Thrust);
-        }
+        addForce();   
     }
 
+
+    public void addForce()
+    {
+        m_Rigidbody.AddForce(direction * m_Thrust);
+        direction = Vector3.zero;
+
+    }
 
     public void printScore()
     {
