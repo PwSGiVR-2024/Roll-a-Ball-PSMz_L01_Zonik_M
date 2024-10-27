@@ -1,5 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class movementController : MonoBehaviour
 {
@@ -7,6 +9,7 @@ public class movementController : MonoBehaviour
     public int score;
     Rigidbody m_Rigidbody;
     public float m_Thrust = 20f;
+    public Text txt;
 
     public Vector3 direction;
 
@@ -19,22 +22,22 @@ public class movementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        direction = Vector3.zero;
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            direction = Vector3.forward;
+            direction += Vector3.forward;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            direction = - Vector3.forward;
+            direction += - Vector3.forward;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            direction = Vector3.left;
+            direction += Vector3.left;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            direction = Vector3.right;
+            direction += Vector3.right;
         }
     }
 
@@ -46,13 +49,14 @@ public class movementController : MonoBehaviour
 
     public void addForce()
     {
-        m_Rigidbody.AddForce(direction * m_Thrust);
-        direction = Vector3.zero;
+        m_Rigidbody.AddForce(direction.normalized * m_Thrust);
+        
 
     }
 
     public void printScore()
     {
         print("current score" + score);
+
     }
 }
