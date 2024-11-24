@@ -9,7 +9,9 @@ public class movementController : MonoBehaviour
     public int score;
     Rigidbody m_Rigidbody;
     public float m_Thrust = 20f;
+    public float m_special_Thrust = 200f;
     public Text txt;
+    public bool specialForce = false;
 
     public Vector3 direction;
 
@@ -22,23 +24,7 @@ public class movementController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        direction = Vector3.zero;
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            direction += Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            direction += - Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            direction += Vector3.left;
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            direction += Vector3.right;
-        }
+        movement();
     }
 
     void FixedUpdate()
@@ -49,6 +35,11 @@ public class movementController : MonoBehaviour
 
     public void addForce()
     {
+        if (specialForce)
+        {
+            m_Rigidbody.AddForce(direction.normalized * m_special_Thrust);
+            specialForce = false;
+        }
         m_Rigidbody.AddForce(direction.normalized * m_Thrust);
         
 
@@ -58,5 +49,36 @@ public class movementController : MonoBehaviour
     {
         print("current score" + score);
 
+    }
+
+    public void movement()
+    {
+        direction = Vector3.zero;
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            direction += Vector3.forward;
+        }
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            direction += -Vector3.forward;
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            direction += Vector3.left;
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            direction += Vector3.right;
+        } 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            direction += Vector3.up;
+        }
+
+        if (Input.GetKey(KeyCode.D))
+        {
+            direction += Vector3.forward;
+            specialForce = true;
+        }
     }
 }
