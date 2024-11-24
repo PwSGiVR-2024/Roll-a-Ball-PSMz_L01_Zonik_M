@@ -41,7 +41,9 @@ public class CollectableController : MonoBehaviour
         other.gameObject.GetComponent<movementController>().printScore();
 
         if(other.gameObject.GetComponent<movementController>().score == 7){
-            SceneManager.LoadScene(2, LoadSceneMode.Single);
+            Scene scene = SceneManager.GetActiveScene();
+
+            SceneManager.LoadScene(scene.buildIndex + 1, LoadSceneMode.Single);
         }
 
 

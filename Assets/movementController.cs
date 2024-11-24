@@ -75,7 +75,7 @@ public class movementController : MonoBehaviour
             direction += Vector3.up;
         }
 
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKeyUp(KeyCode.D))
         {
             direction += Vector3.forward;
             specialForce = true;
