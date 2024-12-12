@@ -1,17 +1,16 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class movementController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public int score;
     Rigidbody m_Rigidbody;
     public float m_Thrust = 20f;
     public float m_special_Thrust = 200f;
-    public Text txt;
     public bool specialForce = false;
+    Boolean reverse = false;
 
     public Vector3 direction;
 
@@ -21,10 +20,11 @@ public class movementController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         movement();
+       
+
     }
 
     void FixedUpdate()
@@ -35,21 +35,15 @@ public class movementController : MonoBehaviour
 
     public void addForce()
     {
+        Vector3 adjustedDirection = reverse ? -direction : direction; 
         if (specialForce)
         {
-            m_Rigidbody.AddForce(direction.normalized * m_special_Thrust);
+            m_Rigidbody.AddForce(adjustedDirection.normalized * m_special_Thrust);
             specialForce = false;
         }
-        m_Rigidbody.AddForce(direction.normalized * m_Thrust);
-        
-
+        m_Rigidbody.AddForce(adjustedDirection.normalized * m_Thrust);
     }
 
-    public void printScore()
-    {
-        print("current score" + score);
-
-    }
 
     public void movement()
     {
@@ -80,5 +74,15 @@ public class movementController : MonoBehaviour
             direction += Vector3.forward;
             specialForce = true;
         }
+    }
+
+    public void reverseMovement(bool reverseStatus)
+    {
+        reverse = reverseStatus;
+    }
+
+    public void addSpped(float additionalSpped)
+    {
+        m_Thrust += additionalSpped;
     }
 }

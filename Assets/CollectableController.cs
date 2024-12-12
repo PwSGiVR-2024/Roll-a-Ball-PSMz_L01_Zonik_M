@@ -34,17 +34,8 @@ public class CollectableController : MonoBehaviour
     {
 
         GameObject.Find("Collectable").GetComponent<AudioSource>().Play();
-        other.gameObject.GetComponent<movementController>().score += 1;
-        other.gameObject.GetComponent<movementController>().txt.text = "CURRENT SCORE: " + other.gameObject.GetComponent<movementController>().score;
 
 
-        other.gameObject.GetComponent<movementController>().printScore();
-
-        if(other.gameObject.GetComponent<movementController>().score == 7){
-            Scene scene = SceneManager.GetActiveScene();
-
-            SceneManager.LoadScene(scene.buildIndex + 1, LoadSceneMode.Single);
-        }
 
 
         //gameObject.SetActive(false);

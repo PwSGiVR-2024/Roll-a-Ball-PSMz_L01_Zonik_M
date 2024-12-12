@@ -981,10 +981,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3983920537128920716, guid: ec6626139c67da745993f5d792be8e77, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4780362610998974568, guid: ec6626139c67da745993f5d792be8e77, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1640575268}
   m_SourcePrefab: {fileID: 100100000, guid: ec6626139c67da745993f5d792be8e77, type: 3}
 --- !u!1 &1105214770
 GameObject:
@@ -1896,6 +1900,25 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1581039060}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1640575261 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4780362610998974568, guid: ec6626139c67da745993f5d792be8e77, type: 3}
+  m_PrefabInstance: {fileID: 1090581606}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1640575268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640575261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8693004dee9790b4f9a6fe3424efb1f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  points: 5
+  collectableName: Collectable
 --- !u!1 &1802952565
 GameObject:
   m_ObjectHideFlags: 0
