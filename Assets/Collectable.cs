@@ -34,10 +34,10 @@ public abstract class Collectable : MonoBehaviour
                 gameController.score += points;  // Add points for a coin
                 break;
             case "CollectableReverse":
-                controller.reverseMovement(reverseMovement);
+                controller.ReverseMovement(reverseMovement);
                 break;
             case "CollectableAddSpeed":
-                controller.addSpped(200f);
+                controller.AddSpeed(200f);
                 break;
 
             default:

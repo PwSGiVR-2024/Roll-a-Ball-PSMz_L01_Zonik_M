@@ -1,53 +1,47 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 
 public class movementController : MonoBehaviour
 {
     Rigidbody m_Rigidbody;
-    public float m_Thrust = 20f;
-    public float m_special_Thrust = 200f;
-    public bool specialForce = false;
-    Boolean reverse = false;
+    public float m_Thrust = 30f;
+    public float maxSpeed = 70f;
 
+    public float wallSlideSpeed = 2f;
+    public float gravityScale = 1.5f;
+
+    private bool isWallSliding = false;
     public Vector3 direction;
 
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-
+        m_Rigidbody.useGravity = false; // Custom gravity handling
     }
 
     void Update()
     {
-        movement();
-       
-
+        HandleInput();
+        HandleWallSliding();
     }
 
     void FixedUpdate()
     {
-        addForce();   
+        ApplyGravity();
+        AddForce();
+        LimitSpeed();
     }
 
-
-    public void addForce()
+    public void AddForce()
     {
-        Vector3 adjustedDirection = reverse ? -direction : direction; 
-        if (specialForce)
-        {
-            m_Rigidbody.AddForce(adjustedDirection.normalized * m_special_Thrust);
-            specialForce = false;
-        }
-        m_Rigidbody.AddForce(adjustedDirection.normalized * m_Thrust);
+        Vector3 adjustedDirection = direction.normalized;
+        m_Rigidbody.AddForce(adjustedDirection * m_Thrust);
     }
 
-
-    public void movement()
+    public void HandleInput()
     {
         direction = Vector3.zero;
+
         if (Input.GetKey(KeyCode.UpArrow))
         {
             direction += Vector3.forward;
@@ -63,26 +57,57 @@ public class movementController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             direction += Vector3.right;
-        } 
-        if (Input.GetKey(KeyCode.Space))
-        {
-            direction += Vector3.up;
-        }
-
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            direction += Vector3.forward;
-            specialForce = true;
         }
     }
 
-    public void reverseMovement(bool reverseStatus)
+    void HandleWallSliding()
     {
-        reverse = reverseStatus;
+        if (isWallSliding)
+        {
+            Vector3 wallSlide = new Vector3(0, -wallSlideSpeed, 0);
+            m_Rigidbody.linearVelocity = new Vector3(m_Rigidbody.linearVelocity.x, wallSlide.y, m_Rigidbody.linearVelocity.z);
+        }
     }
 
-    public void addSpped(float additionalSpped)
+    void OnCollisionEnter(Collision collision)
     {
-        m_Thrust += additionalSpped;
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            isWallSliding = true;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            isWallSliding = false;
+        }
+    }
+
+    void ApplyGravity()
+    {
+        if (!isWallSliding)
+        {
+            m_Rigidbody.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
+        }
+    }
+
+    void LimitSpeed()
+    {
+        if (m_Rigidbody.linearVelocity.magnitude > maxSpeed)
+        {
+            m_Rigidbody.linearVelocity = m_Rigidbody.linearVelocity.normalized * maxSpeed;
+        }
+    }
+
+    public void ReverseMovement(bool reverseStatus)
+    {
+        m_Thrust = reverseStatus ? -Mathf.Abs(m_Thrust) : Mathf.Abs(m_Thrust);
+    }
+
+    public void AddSpeed(float additionalSpeed)
+    {
+        m_Thrust += additionalSpeed;
     }
 }
