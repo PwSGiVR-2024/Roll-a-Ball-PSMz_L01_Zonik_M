@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public abstract class Collectable : MonoBehaviour
 {
-    // Globalny dostêp do movementController
     protected movementController controller;
     protected GameController gameController;
-
-    public int points = 1; 
+    public event Action pickupEvent;
+    public int points = 1;
     public string collectableName = "Collectable";
-    public Boolean reverseMovement = false;
+
+    public float rotationSpeed = 50f; 
 
     protected virtual void Awake()
     {
@@ -23,57 +23,52 @@ public abstract class Collectable : MonoBehaviour
         }
     }
 
-    public virtual void OnCollect(Collider colider)
+    protected virtual void Update()
     {
-        BaseLogic();
-        print("collectable name"+ collectableName);
-        // Perform different actions based on collectableName
-        switch (collectableName)
-        {
-            case "CollectablePoints":
-                gameController.score += points;  // Add points for a coin
-                break;
-            case "CollectableReverse":
-                controller.ReverseMovement(reverseMovement);
-                break;
-            case "CollectableAddSpeed":
-                controller.AddSpeed(200f);
-                break;
-
-            default:
-                gameController.score += points;  // Default behavior for unknown collectable
-                break;
-        }
-
-        // Update the UI with the new score
-        gameController.txt.text = "CURRENT SCORE: " + gameController.score;
-        gameController.printScore();
+        transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
     }
+
+    public abstract void ApplyEffect();
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            OnCollect(other);
+            Collect();
         }
     }
 
-    private void BaseLogic()
+    private void Collect()
     {
-        if (controller == null)
+
+        if (controller == null || gameController == null)
         {
-            Debug.LogError("movementController is not assigned.");
+            Debug.LogError("Controller or GameController is not assigned.");
             return;
         }
+
+        ApplyEffect();
+        if (pickupEvent != null) pickupEvent();
 
         AudioSource audioSource = GameObject.Find("Collectable").GetComponent<AudioSource>();
         if (audioSource != null)
         {
             audioSource.Play();
         }
+    
+
+    Debug.Log($"Collected: {collectableName}");
+        Destroy(gameObject);
     }
-    public void SetCollectableName(string name)
+
+
+    private string myVar;
+
+    public string MyProperty
     {
-        collectableName = name;
+        get { return myVar; }
+        set { myVar = value; }
     }
+
+
 }

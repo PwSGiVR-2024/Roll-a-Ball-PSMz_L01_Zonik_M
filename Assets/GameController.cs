@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -5,26 +6,21 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public int score;
-    public Text txt;
-
+    public Text txt2;
+    private float elapsedTime;
 
     void Start()
     {
-        
+        elapsedTime = 0f;
     }
 
     void Update()
     {
-        if (score > 15)
-        {
-            Scene scene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(scene.buildIndex + 1, LoadSceneMode.Single);
-        }
+        elapsedTime += Time.deltaTime;
+        txt2.text = "Time: " + Mathf.Floor(elapsedTime).ToString() + "s";
 
     }
-    public void printScore()
-    {
-        print("current score" + score);
+ 
 
-    }
+
 }

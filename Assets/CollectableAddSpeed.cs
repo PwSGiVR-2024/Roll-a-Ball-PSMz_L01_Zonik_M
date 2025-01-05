@@ -1,17 +1,18 @@
-using UnityEngine;
-
 public class CollectableAddSpeed : Collectable
 {
+    public float speedBoost = 200f;
+
     protected override void Awake()
     {
         base.Awake();
-        SetCollectableName("CollectableAddSpeed");
+        collectableName = "CollectableAddSpeed";
     }
 
-    public override void OnCollect(Collider other)
+    public override void ApplyEffect()
     {
-        base.OnCollect(other);
-
-        Debug.Log("Collected a CollectableAddSpeed object!");
+        if (controller != null)
+        {
+            controller.AddSpeed(speedBoost);
+        }
     }
 }

@@ -4,15 +4,15 @@ public class CollectableReverseMovement : Collectable
 {
     protected override void Awake()
     {
-        base.Awake(); 
-        SetCollectableName("CollectableReverse"); 
-        reverseMovement = true;
+        base.Awake();
+        collectableName = "CollectableReverse";
     }
 
-    public override void OnCollect(Collider other)
+    public override void ApplyEffect()
     {
-        base.OnCollect(other);
-
-        Debug.Log("Collected a CollectableReverseMovement object!");
+        if (controller != null)
+        {
+            controller.ReverseMovement(true);
+        }
     }
 }

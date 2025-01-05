@@ -1,19 +1,18 @@
-using UnityEngine;
-
 public class CollectableRemovePoints : Collectable
 {
     protected override void Awake()
     {
         base.Awake();
-        SetCollectableName("CollectablePoints");
+        collectableName = "CollectableRemovePoints";
         points = -5;
     }
 
-
-    public override void OnCollect(Collider other)
+    public override void ApplyEffect()
     {
-        base.OnCollect(other);
-
-        Debug.Log("Collected a CollectablePoints object!");
+        if (gameController != null)
+        {
+            gameController.score += points;
+        }
     }
+
 }

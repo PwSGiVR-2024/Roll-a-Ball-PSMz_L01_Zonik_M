@@ -16,7 +16,7 @@ public class movementController : MonoBehaviour
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
-        m_Rigidbody.useGravity = false; // Custom gravity handling
+        m_Rigidbody.useGravity = false; 
     }
 
     void Update()
