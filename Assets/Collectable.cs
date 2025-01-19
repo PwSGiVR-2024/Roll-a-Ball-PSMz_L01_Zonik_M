@@ -55,10 +55,7 @@ public abstract class Collectable : MonoBehaviour
         {
             audioSource.Play();
         }
-    
-
-    Debug.Log($"Collected: {collectableName}");
-        Destroy(gameObject);
+   
     }
 
 

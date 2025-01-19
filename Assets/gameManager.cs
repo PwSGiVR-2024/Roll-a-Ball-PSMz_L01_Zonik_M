@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,7 +47,15 @@ public class GameManager : MonoBehaviour
 
     private void OnCollectablePickedUp()
     {
-        textHandler.addPoints();
         Debug.Log("Zdarzenie pickupEvent zosta³o wywo³ane!");
+        textHandler.addPoints();
+        print(textHandler.player.GetComponent<GameController>().score);
+        print(maxPoints);
+        if (textHandler.player.GetComponent<GameController>().score > maxPoints)
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.buildIndex + 1, LoadSceneMode.Single);
+        }
+        
     }
 }
