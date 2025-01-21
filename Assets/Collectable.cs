@@ -7,6 +7,7 @@ public abstract class Collectable : MonoBehaviour
 {
     protected movementController controller;
     protected GameController gameController;
+    protected GameManager gameManager;
     public event Action pickupEvent;
     public int points = 1;
     public string collectableName = "Collectable";
@@ -20,6 +21,7 @@ public abstract class Collectable : MonoBehaviour
         {
             controller = player.GetComponent<movementController>();
             gameController = player.GetComponent<GameController>();
+            gameManager = player.GetComponent<GameManager>();
         }
     }
 
@@ -41,7 +43,7 @@ public abstract class Collectable : MonoBehaviour
     private void Collect()
     {
 
-        if (controller == null || gameController == null)
+        if (controller == null || gameManager == null)
         {
             Debug.LogError("Controller or GameController is not assigned.");
             return;
@@ -55,7 +57,7 @@ public abstract class Collectable : MonoBehaviour
         {
             audioSource.Play();
         }
-   
+
     }
 
 

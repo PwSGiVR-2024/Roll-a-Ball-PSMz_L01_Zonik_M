@@ -4,21 +4,25 @@ using UnityEngine.UI;
 public class textHandler : MonoBehaviour
 {
     public Text txt;
+    public Text txt2;
     public GameObject player;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private float elapsedTime;
+
     void Start()
     {
-        
+        elapsedTime = 0f;
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        elapsedTime += Time.deltaTime;
+        txt2.text = "Time: " + Mathf.Floor(elapsedTime).ToString() + "s";
     }
     public void addPoints()
     {
-        int score = player.GetComponent<GameController>().score;
-        txt.text = "Score: " + score;
+        int score2 = player.GetComponent<GameManager>().score;
+
+        txt.text = "Score: " + score2;
     }
 }

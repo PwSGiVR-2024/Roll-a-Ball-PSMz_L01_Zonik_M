@@ -9,9 +9,9 @@ public class CollectableAddPoints : Collectable
 
     public override void ApplyEffect()
     {
-        if (gameController != null)
+        if (gameManager != null)
         {
-            gameController.score += points;
+            gameManager.score += points;
         }
     }
 }
